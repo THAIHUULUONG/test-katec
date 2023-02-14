@@ -15,31 +15,16 @@ const Menu = ({ children }: Props) => {
                 <LeftMenu>
                     <ul className="nav nav-pills flex-column">
                         <li>
-                            <Link to="/" className="nav-link"><FaDashcube/> Dashboard</Link>
+                            <Link to="/" className="nav-link"><FaDashcube/> Quản lý người dùng</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/login" className="nav-link"> <FaDashcube/>Orders</Link>
+                            <Link to="/login" className="nav-link"> <FaDashcube/>Quản lý nhóm lớp học</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/" className="nav-link"> <FaDashcube/>Products</Link>
+                            <Link to="/" className="nav-link"> <FaDashcube/>Quản lý lớp học</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/customers" className="nav-link"><FaDashcube/>Customers</Link>
-                        </li>
-                    </ul>
-                    <Text frontSize={26} frontWeight={900}>UI</Text>
-                    <ul className="nav nav-pills flex-column">
-                        <li>
-                            <Link to="/" className="nav-link"><FaDashcube/> Dashboard</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/login" className="nav-link"> <FaDashcube/>Orders</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/" className="nav-link"> <FaDashcube/>Products</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/customers" className="nav-link"><FaDashcube/>Customers</Link>
+                            <Link to="/customers" className="nav-link"><FaDashcube/>Quản lý học sinh</Link>
                         </li>
                     </ul>
                 </LeftMenu>
@@ -70,7 +55,7 @@ const LeftMenu = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    padding-top: 50px;
 `
 const Children = styled.div`
     width: 100%;

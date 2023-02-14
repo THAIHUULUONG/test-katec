@@ -10,8 +10,8 @@ import Login from "./view/Login";
 export default function App() {
   return (
     <Div>
-      <Header />
-      <Test>
+      {/* <Header /> */}
+      {/* <Test>
         <Menu >
         <Routes>
           <Route path="/" element={<Dashboard />} />
@@ -19,7 +19,10 @@ export default function App() {
           <Route path="/products" element={<Login />} />
         </Routes>
         </Menu>
-      </Test>
+      </Test> */}
+        <Routes>
+          <Route path="/" element={<Login />} />
+        </Routes>
     </Div>
   );
 }
