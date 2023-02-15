@@ -5,7 +5,7 @@ export const Text = styled.div<{ frontSize?: number, frontWeight?: number }>`
     font-weight:  ${({ frontWeight }) => frontWeight};
 `
     
-export const Div = styled.div<{ width?: string, height?: string, background?: string, justifyContent?: string, alignItems?: string, flexDirection?: string}>`
+export const Div = styled.div<{ width?: string, height?: string, background?: string, justifyContent?: string, alignItems?: string, flexDirection?: string, padding?: string, margin?: string}>`
     width:  ${({ width }) => width};
     height:  ${({ height }) => height};
     background:  ${({ background }) => background};
@@ -13,6 +13,8 @@ export const Div = styled.div<{ width?: string, height?: string, background?: st
     flex-direction: ${({ flexDirection }) => flexDirection};
     justify-content: ${({ justifyContent }) => justifyContent};
     align-items: ${({ justifyContent }) => justifyContent};
+    padding:  ${({ padding }) => padding};
+    margin:  ${({ margin }) => margin};
 `
 export const FrameInput = styled.div<{ width?: string, height?: string, background?: string, justifyContent?: string, alignItems?: string, padding?: string, margin?: string}>`
     width:  ${({ width }) => width};

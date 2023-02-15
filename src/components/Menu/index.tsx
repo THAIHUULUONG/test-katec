@@ -61,11 +61,3 @@ const Children = styled.div`
     width: 100%;
     height: 100%;
 `
-const Li = styled.div`
-    background: gray
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #FAFA;
-`

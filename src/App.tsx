@@ -8,21 +8,29 @@ import Login from "./view/Login";
 
 
 export default function App() {
+  const dataAuth = JSON.parse(localStorage.getItem('dataAuth') as string);
+  const tokenAuth = localStorage.getItem('tokenAuth');
+  
   return (
     <Div>
-      {/* <Header /> */}
-      {/* <Test>
-        <Menu >
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/login" element={<Home />} />
-          <Route path="/products" element={<Login />} />
-        </Routes>
-        </Menu>
-      </Test> */}
+      {dataAuth.access_token === tokenAuth ?
+        <>
+          <Header />
+          <Test>
+            <Menu >
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/login" element={<Home />} />
+                <Route path="/products" element={<Login />} />
+              </Routes>
+            </Menu>
+          </Test>
+        </>
+        :
         <Routes>
           <Route path="/" element={<Login />} />
         </Routes>
+      }
     </Div>
   );
 }

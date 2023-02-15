@@ -2,11 +2,14 @@ import { FaLock, FaRegEye, FaRegEyeSlash, FaUserAlt } from 'react-icons/fa';
 import styled from 'styled-components';
 import { Button, Div, FrameInput, Input, Text } from '../../components/CssGlobel';
 import { useState } from 'react';
+import axios from 'axios';
+import { useLogin } from '../../hook/useLogin';
 
 
 const Login = () => {
 
   const [typeInput, setTypeInput] = useState('password')
+  const {handleSubmit} = useLogin('0909123123', '123456', 1)
 
   return (
     <Div width='100vw' height='100vh' background='#fff' justifyContent='center' alignItems='center'>
@@ -25,7 +28,7 @@ const Login = () => {
           <FaRegEye onClick={()=> setTypeInput('password')}/>
           }
         </FrameInput>
-        <Button>Push</Button>
+        <Button onClick={handleSubmit}>Push</Button>
       </FrameLogin>
     </Div>
   );
