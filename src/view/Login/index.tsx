@@ -1,8 +1,7 @@
+import { useState } from 'react';
 import { FaLock, FaRegEye, FaRegEyeSlash, FaUserAlt } from 'react-icons/fa';
 import styled from 'styled-components';
 import { Button, Div, FrameInput, Input, Text } from '../../components/CssGlobel';
-import { useState } from 'react';
-import axios from 'axios';
 import { useLogin } from '../../hook/useLogin';
 
 
@@ -12,7 +11,7 @@ const Login = () => {
   const {handleSubmit} = useLogin('0909123123', '123456', 1)
 
   return (
-    <Div width='100vw' height='100vh' background='#fff' justifyContent='center' alignItems='center'>
+    <Div width='100vw' height='90vh' background='#fff' justifyContent='center' alignItems='center'>
       <FrameLogin>
         <Text frontSize={23} frontWeight={600}>Đăng nhập</Text>
         <FrameInput width='400px' height='50px' margin='130px 0px 0px 0px' alignItems='center' justifyContent='center'>

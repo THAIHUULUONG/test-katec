@@ -1,6 +1,4 @@
-import React from "react";
 import styled from "styled-components";
-import { ReactNode } from "react";
 
 const Span = styled.span`
   visibility: hidden;
@@ -36,8 +34,8 @@ const ToolTipText = styled.div`
 `;
 
 interface Props {
-  children?: ReactNode;
-  toolTipText?: ReactNode;
+  children?: string | JSX.Element | JSX.Element[]
+  toolTipText?: string | JSX.Element | JSX.Element[]
   // any props that come into the component
 }
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_KATEC } from "../config";
+import { API_KATEC } from "../../config";
 
 export const useLogin = (
   user_phone: string,
@@ -11,15 +11,13 @@ export const useLogin = (
     e.preventDefault();
     try {
       const resp = await axios.post(
-        `${API_KATEC}/login?user_phone=${user_phone}&user_password=${user_password}&type=${type}`
+        `${API_KATEC}/createUser?`
       );
       localStorage.setItem("tokenAuth", resp.data.data.access_token);
       localStorage.setItem("dataAuth", JSON.stringify(resp.data.data));
-      window.location.reload();
     } catch (error) {
       console.log(error);
     }
   };
-
   return { handleSubmit};
 };

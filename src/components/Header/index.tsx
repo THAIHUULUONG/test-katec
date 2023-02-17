@@ -1,10 +1,12 @@
 import { FaSignOutAlt } from "react-icons/fa";
 import styled from "styled-components";
+import { useLogout } from "../../hook/useLogout";
 import { Div } from "../CssGlobel";
 import Tooltip from "../Tooltip";
 
 const Header = () => {
   const dataAuth = JSON.parse(localStorage.getItem('dataAuth') as string);
+  const {handleLogout} = useLogout()
 
     return (
         <CsDiv>
@@ -17,7 +19,7 @@ const Header = () => {
                     <Avata src="https://colorlib.com/polygon/elaadmin/images/admin.jpg" />
                 </Div>
                 <Div width="100px" alignItems="center" justifyContent="center">
-                    <Tooltip toolTipText='Đăng xuất'><CsFaSignOutAlt /></Tooltip>
+                    <Tooltip toolTipText='Đăng xuất'><CsFaSignOutAlt onClick={handleLogout}/></Tooltip>
                 </Div>
             </Div>
         </CsDiv>
@@ -31,8 +33,11 @@ const CsDiv = styled(Div)`
   width: 100%;
   height: 60px;
   justify-content: space-between;
-  border-bottom: 1px solid #e2dada;
   padding: 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  @media only screen and (max-width: 480px){
+  width: 117%;
+}
 `;
 const Logo = styled.img`
   width: auto;
@@ -49,30 +54,6 @@ const Name = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-const Span = styled.span`
-  visibility: hidden;
-  width: 120px;
-  backgroundcolor: #000;
-  color: #fff;
-  textalign: center;
-  borderradius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  zindex: 1;
-  bottom: 150%;
-  left: 50%;
-  marginleft: -60px;
-  &:after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    marginleft: -5px;
-    borderwidth: 5px;
-    borderstyle: solid;
-    bordercolor: black transparent transparent transparent;
-  }
 `;
 const CsFaSignOutAlt = styled(FaSignOutAlt)`
   &:hover {
