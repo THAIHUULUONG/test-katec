@@ -1,47 +1,39 @@
-import { Route, Routes } from "react-router-dom";
-import styled from "styled-components";
-import Header from "./components/Header";
-import Menu from "./components/Menu";
-import { dataAuth, tokenAuth } from "./config";
-import Dashboard from "./view/Dashboard";
-import Home from "./view/Home/index";
-import Login from "./view/Login";
-import Position from "./view/Position";
+// routing
+import Routes from 'routes';
 
-export default function App() {
-  return (
-    <Div>
-      {dataAuth?.access_token === tokenAuth ?
-        <>
-          <Header />
-          <Test>
-            <Menu >
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/position" element={<Position />} />
-              </Routes>
-            </Menu>
-          </Test>
-        </>
-        :
-        <Routes>
-          <Route path="/" element={<Login />} />
-        </Routes>
-      }
-    </Div>
-  );
-}
+// project imports
+import NavigationScroll from 'layout/NavigationScroll';
+import ThemeCustomization from 'themes';
+import Locales from 'ui-component/Locales';
+import RTLLayout from 'ui-component/RTLLayout';
+import Snackbar from 'ui-component/extended/Snackbar';
 
-const Div = styled.div`
- width: 100%;
- height: 100%;
-`
-const Test = styled.div`
-  width: 100%;
-  height: 100%;
-  background: gray
-  display: flex;
-  flex-direction: row;
+// auth provider
+// import { FirebaseProvider as AuthProvider } from 'contexts/FirebaseContext';
+// import { AWSCognitoProvider as AuthProvider } from 'contexts/AWSCognitoContext';
+import { JWTProvider as AuthProvider } from 'contexts/JWTContext';
+// import { Auth0Provider as AuthProvider } from 'contexts/Auth0Context';
 
-`
+// ==============================|| APP ||============================== //
+
+
+
+const App = () => (
+    <ThemeCustomization>
+        {/* RTL layout */}
+        <RTLLayout>
+            <Locales>
+                <NavigationScroll>
+                    <AuthProvider>
+                        <>
+                            <Routes />
+                            <Snackbar />
+                        </>
+                    </AuthProvider>
+                </NavigationScroll>
+            </Locales>
+        </RTLLayout>
+    </ThemeCustomization>
+);
+
+export default App;
