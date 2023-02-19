@@ -22,9 +22,10 @@ import { KeyedObject } from "types";
 import IBreadcrumsCustom from "ui-component/breadcrums";
 import MainCardV2 from "ui-component/cards/MainCardV2";
 import AlertItemDelete from "views/application/kanban/Board/AlertItemDelete";
-import ModalAddUser from "./ModalAddUser";
 import { GridCloseIcon } from "@mui/x-data-grid";
-import ModalAddUpdateUser from "./ModalAddUpdateUser";
+import ModalAddRole from "./ModalAddRole";
+import ModalAddUpdateRole from "./ModalAddUpdateRole";
+import AlertItemDeleteRole from "views/application/kanban/Board/AlertItemDeleteRole";
 
 let originalRows: any = [];
 
@@ -55,7 +56,7 @@ export default function StickyHeadTable(props: {
   useEffect(() => {
     ;
     filteredRows = formValues.filter((row: any) => {
-      return row.user_name.toLowerCase().includes(search.toLowerCase());
+      return row.role_name.toLowerCase().includes(search.toLowerCase());
     });
     setRows(filteredRows);
   }, [search, formValues]);
@@ -100,8 +101,8 @@ export default function StickyHeadTable(props: {
 
   return (
     <>
-      <IBreadcrumsCustom profile="Danh sách người dùng" mainProfile="Danh sách người dùng" link="/manage-user" />
-      <MainCardV2 title="Danh sách người dùng" handleOpen={() => setopenModalAddUser(true)}>
+      <IBreadcrumsCustom profile="Danh sách chức vụ" mainProfile="Danh sách chức vụ" link="/manage-user" />
+      <MainCardV2 title="Danh sách chức vụ" handleOpen={() => setopenModalAddUser(true)}>
         <Grid
           container
           spacing={gridSpacing}
@@ -110,7 +111,7 @@ export default function StickyHeadTable(props: {
           <Grid item xs={12} lg={3}>
             <Grid item>
               <TextField
-                placeholder="Tên người dùng..."
+                placeholder="Tên chức vụ..."
                 onChange={(e) => {
                   requestSearch(e.target.value);
                   handlePageChange({ selected: 0 });
@@ -140,7 +141,6 @@ export default function StickyHeadTable(props: {
             <TableHead>
               <TableRow>
                 <TableCell>SỐ THỨ TỰ</TableCell>
-                <TableCell align="center">TÊN NGƯỜI DÙNG</TableCell>
                 <TableCell align="center">Chức vụ</TableCell>
                 <TableCell align="center">CHỈNH SỬA</TableCell>
               </TableRow>
@@ -154,25 +154,24 @@ export default function StickyHeadTable(props: {
                     hover
                     role="checkbox"
                     tabIndex={-1}
-                    key={row.code}
+                    key={row.id}
                   >
                     <TableCell component="th" scope="row">
                       {index + 1}
                     </TableCell>
-                    <TableCell align="center">{row.user_name}</TableCell>
                     <TableCell align="center">{row.role_name}</TableCell>
                     <TableCell align="center">
                       <CsIconEdit onClick={() => setopenModalUpdateUser(true)}/>
                       <CsIconTrash onClick={() => setopenModalDelete(true)} />
-                      <ModalAddUpdateUser title={`Cập nhật người dùng ${row.user_name}`} open={openModalUpdateUser} handleClose={() => setopenModalUpdateUser(false)} handleAlert={(e) => setOpenAlert(e)} dataUser={formValues[index]} id_user={row.id}/>
+                      <ModalAddUpdateRole title={`Cập nhật chức vụ ${row.role_name}`} open={openModalUpdateUser} handleClose={() => setopenModalUpdateUser(false)} handleAlert={(e) => setOpenAlert(e)} dataUser={formValues[index]} id_user={row.id}/>
                     </TableCell>
-                    <AlertItemDelete title={row.user_name} open={openModalDelete} handleAlert={(e) => setOpenAlert(e)} handleClose={() => setopenModalDelete(false)} id_user={row.id}/>
+                    <AlertItemDeleteRole title={row.role_name} open={openModalDelete} handleAlert={(e) => setOpenAlert(e)} handleClose={() => setopenModalDelete(false)} id_role={row.id}/>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
         </TableContainer>
-        <ModalAddUser title={'Thêm người dùng'} open={openModalAddUser} handleClose={() => setopenModalAddUser(false)} handleAlert={(e) => setOpenAlert(e)} dataRole={formValuesRole}/>
+        <ModalAddRole title={'Thêm chức vụ'} open={openModalAddUser} handleClose={() => setopenModalAddUser(false)} handleAlert={(e) => setOpenAlert(e)}/>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"

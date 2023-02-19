@@ -2,6 +2,15 @@ export const AUTH_API = {
     SignIn: 'login',
     CreateUser: 'createUser',
     DeleteUser: 'activeUser',
+    CreateRole: 'createRole',
+    DeleteRole: 'deleteRole',
+    CreateClassGroup: 'createClassGroup',
+    DeleteClassGroup: 'deleteClassGroup',
+    CreateClassRoom: 'createClassRoom',
+    DeleteClassRoom: 'deleteClassRoom',
+    CreateStudent: 'createStudent',
+    DeleteStudent: 'deleteStudent',
+    
 };
 
 export const PROJECT = {

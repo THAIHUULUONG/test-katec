@@ -3,6 +3,10 @@ import { lazy } from "react";
 import MainLayout from "layout/MainLayout";
 import Loadable from "ui-component/Loadable";
 import AuthGuard from "utils/route-guard/AuthGuard";
+import ManageRole from "views/dashboard-admin/ManageRole";
+import ManageGroupClass from "views/dashboard-admin/ManageGroupClass";
+import ManageClassRoom from "views/dashboard-admin/ManageClassRoom";
+import ManageStudent from "views/dashboard-admin/ManageStudent";
 
 const ManageUser = Loadable(
   lazy(() => import("views/dashboard-admin/ManageUser"))
@@ -22,19 +26,19 @@ const MainRoutes = {
     },
     {
       path: "/role-user",
-      element: <ManageUser />,
+      element: <ManageRole />,
     },
     {
       path: "/group-class",
-      element: <ManageUser />,
+      element: <ManageGroupClass />,
     },
     {
       path: "/class-room",
-      element: <ManageUser />,
+      element: <ManageClassRoom />,
     },
     {
       path: "/manage-student",
-      element: <ManageUser />,
+      element: <ManageStudent />,
     },
   ],
 };

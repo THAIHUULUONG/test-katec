@@ -2,7 +2,7 @@
 import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
 import { AUTH_API } from '_apis/api-endpoint';
 import { dispatch } from 'store';
-import { getUsersList } from 'store/slices/allUser';
+import { getRoleList } from 'store/slices/allUser';
 import axios from 'utils/axios';
 
 // types
@@ -11,19 +11,19 @@ interface Props {
     open: boolean;
     handleClose: (status: boolean) => void;
     handleAlert: (status: boolean) => void;
-    id_user: number;
+    id_role: number;
 }
 
 // ==============================|| KANBAN BOARD - ITEM DELETE ||============================== //
 
-export default function AlertItemDelete({ title, open, handleClose, handleAlert, id_user }: Props) {
+export default function AlertItemDeleteRole({ title, open, handleClose, handleAlert, id_role }: Props) {
 
     const handleDelete = async () => {
-        const response = await axios.post(`${AUTH_API.DeleteUser}?id_user=${id_user}`);
+        const response = await axios.post(`${AUTH_API.DeleteUser}?id_role=${id_role}`);
         if (response.data.status === true) {
           handleClose(true)
           handleAlert(true)
-          dispatch(getUsersList());
+          dispatch(getRoleList());
         } else {
         }
     };

@@ -22,9 +22,9 @@ import { KeyedObject } from "types";
 import IBreadcrumsCustom from "ui-component/breadcrums";
 import MainCardV2 from "ui-component/cards/MainCardV2";
 import AlertItemDelete from "views/application/kanban/Board/AlertItemDelete";
-import ModalAddUser from "./ModalAddUser";
+import ModalAddStudent from "./ModalAddStudent";
 import { GridCloseIcon } from "@mui/x-data-grid";
-import ModalAddUpdateUser from "./ModalAddUpdateUser";
+import ModalAddUpdateStudent from "./ModalAddUpdateStudent";
 
 let originalRows: any = [];
 
@@ -33,7 +33,6 @@ let originalRows: any = [];
 export default function StickyHeadTable(props: {
   [x: string]: any;
   projectItem: any;
-  roleItems: any;
 }) {
   const [formValues, setFormValues] = useState([] as any);
   const [formValuesRole, setFormValuesRole] = useState([] as any);
@@ -45,9 +44,7 @@ export default function StickyHeadTable(props: {
     if (props && props.projectItem) {
       setFormValues([...props.projectItem]);
     }
-    if (props && props.roleItems) {
-      setFormValuesRole([...props.roleItems]);
-    }
+   
   }, [props]);
 
   let filteredRows: any = [];
@@ -55,7 +52,7 @@ export default function StickyHeadTable(props: {
   useEffect(() => {
     ;
     filteredRows = formValues.filter((row: any) => {
-      return row.user_name.toLowerCase().includes(search.toLowerCase());
+      return row.student_name.toLowerCase().includes(search.toLowerCase());
     });
     setRows(filteredRows);
   }, [search, formValues]);
@@ -83,8 +80,8 @@ export default function StickyHeadTable(props: {
     setPage(selected);
   };
   const [openModalDelete, setopenModalDelete] = useState(false);
-  const [openModalAddUser, setopenModalAddUser] = useState(false);
-  const [openModalUpdateUser, setopenModalUpdateUser] = useState(false);
+  const [openModalAddStudent, setopenModalAddStudent] = useState(false);
+  const [openModalUpdateStudent, setopenModalUpdateStudent] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
 
   useEffect(() => {
@@ -100,8 +97,8 @@ export default function StickyHeadTable(props: {
 
   return (
     <>
-      <IBreadcrumsCustom profile="Danh sách người dùng" mainProfile="Danh sách người dùng" link="/manage-user" />
-      <MainCardV2 title="Danh sách người dùng" handleOpen={() => setopenModalAddUser(true)}>
+      <IBreadcrumsCustom profile="Danh sách học sinh" mainProfile="Danh sách học sinh" link="/manage-student" />
+      <MainCardV2 title="Danh sách học sinh" handleOpen={() => setopenModalAddStudent(true)}>
         <Grid
           container
           spacing={gridSpacing}
@@ -110,7 +107,7 @@ export default function StickyHeadTable(props: {
           <Grid item xs={12} lg={3}>
             <Grid item>
               <TextField
-                placeholder="Tên người dùng..."
+                placeholder="Tên học sinh..."
                 onChange={(e) => {
                   requestSearch(e.target.value);
                   handlePageChange({ selected: 0 });
@@ -140,8 +137,9 @@ export default function StickyHeadTable(props: {
             <TableHead>
               <TableRow>
                 <TableCell>SỐ THỨ TỰ</TableCell>
-                <TableCell align="center">TÊN NGƯỜI DÙNG</TableCell>
-                <TableCell align="center">Chức vụ</TableCell>
+                <TableCell align="center">TÊN HỌC SINH</TableCell>
+                <TableCell align="center">GIỚI TÍNH</TableCell>
+                <TableCell align="center">TÊN LỚP</TableCell>
                 <TableCell align="center">CHỈNH SỬA</TableCell>
               </TableRow>
             </TableHead>
@@ -150,7 +148,7 @@ export default function StickyHeadTable(props: {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: KeyedObject, index: number) => (
                   <TableRow
-                    sx={{ py: 3 }}
+                    sx={{ py: 3 }}  
                     hover
                     role="checkbox"
                     tabIndex={-1}
@@ -159,20 +157,21 @@ export default function StickyHeadTable(props: {
                     <TableCell component="th" scope="row">
                       {index + 1}
                     </TableCell>
-                    <TableCell align="center">{row.user_name}</TableCell>
-                    <TableCell align="center">{row.role_name}</TableCell>
+                    <TableCell align="center">{row.student_name}</TableCell>
+                    <TableCell align="center">{row.gender_name}</TableCell>
+                    <TableCell align="center">{row.class_name}</TableCell>
                     <TableCell align="center">
-                      <CsIconEdit onClick={() => setopenModalUpdateUser(true)}/>
+                      <CsIconEdit onClick={() => setopenModalUpdateStudent(true)}/>
                       <CsIconTrash onClick={() => setopenModalDelete(true)} />
-                      <ModalAddUpdateUser title={`Cập nhật người dùng ${row.user_name}`} open={openModalUpdateUser} handleClose={() => setopenModalUpdateUser(false)} handleAlert={(e) => setOpenAlert(e)} dataUser={formValues[index]} id_user={row.id}/>
+                      <ModalAddUpdateStudent title={`Cập nhật học sinh ${row.student_name}`} open={openModalUpdateStudent} handleClose={() => setopenModalUpdateStudent(false)} handleAlert={(e) => setOpenAlert(e)} dataStudent={formValues[index]} id_user={row.id}/>
                     </TableCell>
-                    <AlertItemDelete title={row.user_name} open={openModalDelete} handleAlert={(e) => setOpenAlert(e)} handleClose={() => setopenModalDelete(false)} id_user={row.id}/>
+                    <AlertItemDelete title={row.student_name} open={openModalDelete} handleAlert={(e) => setOpenAlert(e)} handleClose={() => setopenModalDelete(false)} id_user={row.id}/>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
         </TableContainer>
-        <ModalAddUser title={'Thêm người dùng'} open={openModalAddUser} handleClose={() => setopenModalAddUser(false)} handleAlert={(e) => setOpenAlert(e)} dataRole={formValuesRole}/>
+        <ModalAddStudent title={'Thêm học sinh'} open={openModalAddStudent} handleClose={() => setopenModalAddStudent(false)} handleAlert={(e) => setOpenAlert(e)} dataRole={formValuesRole}/>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"

@@ -17,7 +17,7 @@ interface Props {
 
 // ==============================|| KANBAN BOARD - ITEM DELETE ||============================== //
 
-export default function ModalAddUser({ title, open, handleClose, handleAlert, dataRole}: Props) {
+export default function ModalAddClassRoom({ title, open, handleClose, handleAlert, dataRole}: Props) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');

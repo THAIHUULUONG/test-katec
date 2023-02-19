@@ -31,11 +31,11 @@ export default function ModalAddUpdateUser({ title, open, handleClose, handleAle
     const [user_account, setUser_account] = useState('');
 
     React.useEffect(() => {
-        setRole(dataUser.id_role);
-        setUsername(dataUser.user_name);
-        setPassword(dataUser.user_password);
-        setPermission(dataUser.permission);
-        setUser_account(dataUser.user_account);
+        setRole(dataUser?.id_role);
+        setUsername(dataUser?.user_name);
+        setPassword(dataUser?.user_password);
+        setPermission(dataUser?.permission);
+        setUser_account(dataUser?.user_account);
     }, [dataUser]);
 
     const handleChange = (event: SelectChangeEvent) => {
@@ -70,11 +70,11 @@ export default function ModalAddUpdateUser({ title, open, handleClose, handleAle
                             <TextField id="outlined-basic" value={user_account} label="Tên người dùng" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setUser_account(e.target.value)} />
                             <TextField id="outlined-basic" value={password} label="Mật khẩu" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setPassword(e.target.value)} />
                             <FormControl sx={{ width: '90%' }}>
-                                <InputLabel id="demo-simple-select-label">Vai trò</InputLabel>
+                                <InputLabel id="demo-simple-select-label">Chức vụ</InputLabel>
                                 <Select
                                     id="select-basic"
                                     value={role}
-                                    label="Vai trò"
+                                    label="Chức vụ"
                                     onChange={handleChange}
                                 >
                                     {dataRole.map((items: any) => (

@@ -14,6 +14,9 @@ const initialState: DefaultStateProps['allUser'] = {
     error: null,
     usersS1: [],
     roleUser: [],
+    groupClass: [],
+    classRoom: [],
+    student: [],
 };
 
 const slice = createSlice({
@@ -30,9 +33,24 @@ const slice = createSlice({
             state.usersS1 = action.payload;
         },
 
-         // GET ROLE STYLE 1
+         // GET ROLE
          getRoleListSuccess(state, action) {
             state.roleUser = action.payload;
+        },
+
+         // GET groupClass
+         getGroupClassListSuccess(state, action) {
+            state.groupClass = action.payload;
+        },
+
+         // GET classRoom
+         getClassRoomListSuccess(state, action) {
+            state.classRoom = action.payload;
+        },
+
+        // GET classRoom
+        getStudentListSuccess(state, action) {
+            state.student = action.payload;
         }
     }
 });
@@ -64,3 +82,36 @@ export function getRoleList() {
     };
 }
 
+export function getGroupClassList() {
+    return async () => {
+        try {
+            const response = await axios.get('/viewClassGroup');
+            dispatch(slice.actions.getGroupClassListSuccess(response.data.data));
+        } catch (error) {
+            dispatch(slice.actions.hasError(error));
+        }
+    };
+}
+
+export function getClassRoomList() {
+    return async () => {
+        try {
+            const response = await axios.get('/viewClassRoom');
+            dispatch(slice.actions.getClassRoomListSuccess(response.data.data));
+        } catch (error) {
+            dispatch(slice.actions.hasError(error));
+        }
+    };
+}
+
+export function getStudentList() {
+    return async () => {
+        try {
+            const response = await axios.get('/viewStudent');
+            console.log('reponse1231', response);
+            dispatch(slice.actions.getStudentListSuccess(response.data.data));
+        } catch (error) {
+            dispatch(slice.actions.hasError(error));
+        }
+    };
+}
