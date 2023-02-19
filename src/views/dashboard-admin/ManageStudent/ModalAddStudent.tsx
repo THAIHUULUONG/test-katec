@@ -3,7 +3,7 @@ import { Button, Dialog, DialogActions, DialogTitle, FormControl, Grid, InputLab
 import { AUTH_API } from '_apis/api-endpoint';
 import { useState } from 'react';
 import { dispatch } from 'store';
-import { getUsersList } from 'store/slices/allUser';
+import { getStudentList, getUsersList } from 'store/slices/allUser';
 import axios from 'utils/axios';
 
 // types
@@ -12,29 +12,30 @@ interface Props {
     open: boolean;
     handleClose: (status: boolean) => void;
     handleAlert: (status: boolean) => void;
-    dataRole: any;
+    dataClassRoom: any;
 }
 
 // ==============================|| KANBAN BOARD - ITEM DELETE ||============================== //
 
-export default function ModalAddUpdateStudent({ title, open, handleClose, handleAlert, dataRole}: Props) {
-
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
-    const [permission, setPermission] = useState('...');
-    const [user_account, setUser_account] = useState('');
+export default function ModalAddUpdateStudent({ title, open, handleClose, handleAlert, dataClassRoom}: Props) {
+    console.log('dataClassRoom', dataClassRoom);
+    
+    const [studentName, setStudentName] = useState('');
+    const [studentGender, setStudentGender] = useState('');
+    const [idClass, setIdClass] = useState('');
+    const [studentBirthday, setStudentBirthday] = useState('...');
 
     const handleChange = (event: SelectChangeEvent) => {
-        setRole(event.target.value);
+        setIdClass(event.target.value);
     };
 
     const handleCreate = async () => {
-        const response = await axios.post(`${AUTH_API.CreateUser}?user_name=${username}&id_role=${role}&permission=${permission}&user_password=${password}&user_account=${user_account}`);
+        // const response = await axios.post(`${AUTH_API.CreateStudent}?student_name=${studentName}&student_gender=${studentGender}&student_birthday=${studentBirthday}&id_class=${idClass}`);
+        const response = await axios.post(`${AUTH_API.CreateStudent}?student_name=${studentName}&student_gender=1&student_birthday=1&id_class=${idClass}`);
         if (response.data.status === true) {
           handleClose(true)
           handleAlert(true)
-          dispatch(getUsersList());
+          dispatch(getStudentList());
         } else {
         }
     };
@@ -53,19 +54,19 @@ export default function ModalAddUpdateStudent({ title, open, handleClose, handle
                     <DialogTitle align='center' id="item-delete-title">{title}</DialogTitle>
                     <FormControl>
                         <Grid item sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', minWidth: '400px' }}>
-                            <TextField id="outlined-basic" label="Tài khoản" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setUsername(e.target.value)} />
-                            <TextField id="outlined-basic" label="Tên người dùng" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setUser_account(e.target.value)} />
-                            <TextField id="outlined-basic" label="Mật khẩu" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setPassword(e.target.value)} />
+                            <TextField value={studentName} id="outlined-basic" label="Tên học sinh" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setStudentName(e.target.value)} />
+                            <TextField value={studentGender} id="outlined-basic" label="Giới tính" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setStudentGender(e.target.value)} />
+                            <TextField value={studentBirthday} type='date' id="outlined-basic" label="Ngày sinh" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setStudentBirthday(e.target.value)} />
                             <FormControl sx={{ width: '90%' }}>
-                                <InputLabel id="demo-simple-select-label">Chức vụ</InputLabel>
+                                <InputLabel id="demo-simple-select-label">Lớp học</InputLabel>
                                 <Select
                                     id="select-basic"
-                                    value={role}
+                                    value={idClass}
                                     label="Chức vụ"
                                     onChange={handleChange}
                                 >
-                                    {dataRole.map((items: any) => (
-                                        <MenuItem value={items.id} >{items.role_name}</MenuItem>
+                                    {dataClassRoom.map((items: any) => (
+                                        <MenuItem value={items.id} >{items.class_name}</MenuItem>
                                     ))}
                                 </Select>
                             </FormControl>
@@ -74,7 +75,7 @@ export default function ModalAddUpdateStudent({ title, open, handleClose, handle
                             <Button onClick={() => handleClose(false)} color="error">
                                 Hủy bỏ
                             </Button>
-                            <Button disabled={username === '' || password === '' || role === ''} variant="contained" size="small" onClick={handleCreate} autoFocus>
+                            <Button disabled={studentName === ''} variant="contained" size="small" onClick={handleCreate} autoFocus>
                                 Thêm
                             </Button>
                         </DialogActions>

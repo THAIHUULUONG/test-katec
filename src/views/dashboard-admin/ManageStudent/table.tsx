@@ -25,6 +25,7 @@ import AlertItemDelete from "views/application/kanban/Board/AlertItemDelete";
 import ModalAddStudent from "./ModalAddStudent";
 import { GridCloseIcon } from "@mui/x-data-grid";
 import ModalAddUpdateStudent from "./ModalAddUpdateStudent";
+import AlertItemDeleteStudent from "views/application/kanban/Board/AlertItemDeleteStudent";
 
 let originalRows: any = [];
 
@@ -33,9 +34,10 @@ let originalRows: any = [];
 export default function StickyHeadTable(props: {
   [x: string]: any;
   projectItem: any;
+  dataClassRoom: any;
 }) {
   const [formValues, setFormValues] = useState([] as any);
-  const [formValuesRole, setFormValuesRole] = useState([] as any);
+  const [formValuesClassRoom, setFormValuesClassRoom] = useState([] as any);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = useState<any[]>(originalRows);
@@ -43,6 +45,9 @@ export default function StickyHeadTable(props: {
   useEffect(() => {
     if (props && props.projectItem) {
       setFormValues([...props.projectItem]);
+    }
+    if (props && props.dataClassRoom) {
+      setFormValuesClassRoom([...props.dataClassRoom]);
     }
    
   }, [props]);
@@ -163,15 +168,15 @@ export default function StickyHeadTable(props: {
                     <TableCell align="center">
                       <CsIconEdit onClick={() => setopenModalUpdateStudent(true)}/>
                       <CsIconTrash onClick={() => setopenModalDelete(true)} />
-                      <ModalAddUpdateStudent title={`Cập nhật học sinh ${row.student_name}`} open={openModalUpdateStudent} handleClose={() => setopenModalUpdateStudent(false)} handleAlert={(e) => setOpenAlert(e)} dataStudent={formValues[index]} id_user={row.id}/>
+                      <ModalAddUpdateStudent dataClassRoom={formValuesClassRoom} title={`Cập nhật học sinh ${row.student_name}`} open={openModalUpdateStudent} handleClose={() => setopenModalUpdateStudent(false)} handleAlert={(e) => setOpenAlert(e)} dataStudent={formValues[index]} id_student={row.id}/>
                     </TableCell>
-                    <AlertItemDelete title={row.student_name} open={openModalDelete} handleAlert={(e) => setOpenAlert(e)} handleClose={() => setopenModalDelete(false)} id_user={row.id}/>
+                    <AlertItemDeleteStudent title={row.student_name} open={openModalDelete} handleAlert={(e) => setOpenAlert(e)} handleClose={() => setopenModalDelete(false)} id_student={row.id}/>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
         </TableContainer>
-        <ModalAddStudent title={'Thêm học sinh'} open={openModalAddStudent} handleClose={() => setopenModalAddStudent(false)} handleAlert={(e) => setOpenAlert(e)} dataRole={formValuesRole}/>
+        <ModalAddStudent title={'Thêm học sinh'} open={openModalAddStudent} handleClose={() => setopenModalAddStudent(false)} handleAlert={(e) => setOpenAlert(e)} dataClassRoom={formValuesClassRoom}/>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"

@@ -3,7 +3,7 @@ import { Button, Dialog, DialogActions, DialogTitle, FormControl, Grid, InputLab
 import { AUTH_API } from '_apis/api-endpoint';
 import { useState } from 'react';
 import { dispatch } from 'store';
-import { getUsersList } from 'store/slices/allUser';
+import { getClassRoomList, getUsersList } from 'store/slices/allUser';
 import axios from 'utils/axios';
 
 // types
@@ -12,29 +12,31 @@ interface Props {
     open: boolean;
     handleClose: (status: boolean) => void;
     handleAlert: (status: boolean) => void;
-    dataRole: any;
+    dataGroupClass: any;
+    dataUser: any;
 }
 
 // ==============================|| KANBAN BOARD - ITEM DELETE ||============================== //
 
-export default function ModalAddClassRoom({ title, open, handleClose, handleAlert, dataRole}: Props) {
+export default function ModalAddClassRoom({ title, open, handleClose, handleAlert, dataGroupClass, dataUser}: Props) {
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
-    const [permission, setPermission] = useState('...');
-    const [user_account, setUser_account] = useState('');
-
-    const handleChange = (event: SelectChangeEvent) => {
-        setRole(event.target.value);
+    const [clasSName, setClassName] = useState('');
+    const [idGroup, setIdGroup] = useState('');
+    const [idUser, setIdUser] = useState('');
+ 
+    const handleChangeGroup = (event: SelectChangeEvent) => {
+        setIdGroup(event.target.value);
+    };
+    const handleChangeUser = (event: SelectChangeEvent) => {
+        setIdUser(event.target.value);
     };
 
     const handleCreate = async () => {
-        const response = await axios.post(`${AUTH_API.CreateUser}?user_name=${username}&id_role=${role}&permission=${permission}&user_password=${password}&user_account=${user_account}`);
+        const response = await axios.post(`${AUTH_API.CreateClassRoom}?class_name=${clasSName}&id_group=${idGroup}&id_user=${idUser}`);
         if (response.data.status === true) {
           handleClose(true)
           handleAlert(true)
-          dispatch(getUsersList());
+          dispatch(getClassRoomList());
         } else {
         }
     };
@@ -53,19 +55,30 @@ export default function ModalAddClassRoom({ title, open, handleClose, handleAler
                     <DialogTitle align='center' id="item-delete-title">{title}</DialogTitle>
                     <FormControl>
                         <Grid item sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', minWidth: '400px' }}>
-                            <TextField id="outlined-basic" label="Tài khoản" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setUsername(e.target.value)} />
-                            <TextField id="outlined-basic" label="Tên người dùng" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setUser_account(e.target.value)} />
-                            <TextField id="outlined-basic" label="Mật khẩu" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setPassword(e.target.value)} />
+                            <TextField id="outlined-basic" label="Tên lớp" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setClassName(e.target.value)} />
                             <FormControl sx={{ width: '90%' }}>
-                                <InputLabel id="demo-simple-select-label">Chức vụ</InputLabel>
+                                <InputLabel id="demo-simple-select-label">Nhóm lớp</InputLabel>
                                 <Select
                                     id="select-basic"
-                                    value={role}
-                                    label="Chức vụ"
-                                    onChange={handleChange}
+                                    value={idGroup}
+                                    label="Nhóm lớp"
+                                    onChange={handleChangeGroup}
                                 >
-                                    {dataRole.map((items: any) => (
-                                        <MenuItem value={items.id} >{items.role_name}</MenuItem>
+                                    {dataGroupClass.map((items: any) => (
+                                        <MenuItem value={items.id} >{items.group_name}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl sx={{ width: '90%' }}>
+                                <InputLabel id="demo-simple-select-label">Người dùng</InputLabel>
+                                <Select
+                                    id="select-basic"
+                                    value={idUser}
+                                    label="Người dùng"
+                                    onChange={handleChangeUser}
+                                >
+                                    {dataUser.map((items: any) => (
+                                        <MenuItem value={items.id} >{items.user_name}</MenuItem>
                                     ))}
                                 </Select>
                             </FormControl>
@@ -74,7 +87,7 @@ export default function ModalAddClassRoom({ title, open, handleClose, handleAler
                             <Button onClick={() => handleClose(false)} color="error">
                                 Hủy bỏ
                             </Button>
-                            <Button disabled={username === '' || password === '' || role === ''} variant="contained" size="small" onClick={handleCreate} autoFocus>
+                            <Button disabled={clasSName === '' || idGroup === '' || idUser === ''} variant="contained" size="small" onClick={handleCreate} autoFocus>
                                 Thêm
                             </Button>
                         </DialogActions>

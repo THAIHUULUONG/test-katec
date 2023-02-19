@@ -25,6 +25,7 @@ import AlertItemDelete from "views/application/kanban/Board/AlertItemDelete";
 import ModalAddClassRoom from "./ModalAddClassRoom";
 import { GridCloseIcon } from "@mui/x-data-grid";
 import ModalAddUpdateClassRoom from "./ModalAddUpdateClassRoom";
+import AlertItemDeleteClassRoom from "views/application/kanban/Board/AlertItemDeleteClassRoom";
 
 let originalRows: any = [];
 
@@ -33,9 +34,13 @@ let originalRows: any = [];
 export default function StickyHeadTable(props: {
   [x: string]: any;
   projectItem: any;
+  dataGroupClass: any;
+  dataUser: any;
 }) {
   const [formValues, setFormValues] = useState([] as any);
   const [formValuesRole, setFormValuesRole] = useState([] as any);
+  const [formValuesGroupClass, setFormValuesGroupClass] = useState([] as any);
+  const [formValuesUser, setFormValuesUser] = useState([] as any);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = useState<any[]>(originalRows);
@@ -43,6 +48,12 @@ export default function StickyHeadTable(props: {
   useEffect(() => {
     if (props && props.projectItem) {
       setFormValues([...props.projectItem]);
+    }
+    if (props && props.dataGroupClass) {
+      setFormValuesGroupClass([...props.dataGroupClass]);
+    }
+    if (props && props.dataUser) {
+      setFormValuesUser([...props.dataUser]);
     }
    
   }, [props]);
@@ -97,8 +108,8 @@ export default function StickyHeadTable(props: {
 
   return (
     <>
-      <IBreadcrumsCustom profile="Danh sách người dùng" mainProfile="Danh sách người dùng" link="/manage-user" />
-      <MainCardV2 title="Danh sách người dùng" handleOpen={() => setopenModalAddClassRoom(true)}>
+      <IBreadcrumsCustom profile="Danh sách lớp học" mainProfile="Danh sách lớp học" link="/manage-user" />
+      <MainCardV2 title="Danh sách lớp học" handleOpen={() => setopenModalAddClassRoom(true)}>
         <Grid
           container
           spacing={gridSpacing}
@@ -107,7 +118,7 @@ export default function StickyHeadTable(props: {
           <Grid item xs={12} lg={3}>
             <Grid item>
               <TextField
-                placeholder="Tên người dùng..."
+                placeholder="Tên lớp học..."
                 onChange={(e) => {
                   requestSearch(e.target.value);
                   handlePageChange({ selected: 0 });
@@ -163,15 +174,15 @@ export default function StickyHeadTable(props: {
                     <TableCell align="center">
                       <CsIconEdit onClick={() => setopenModalUpdateClassRoom(true)}/>
                       <CsIconTrash onClick={() => setopenModalDelete(true)} />
-                      <ModalAddUpdateClassRoom title={`Cập nhật người dùng ${row.user_name}`} open={openModalUpdateClassRoom} handleClose={() => setopenModalUpdateClassRoom(false)} handleAlert={(e) => setOpenAlert(e)} dataClassRoom={formValues[index]} id_user={row.id}/>
+                      <ModalAddUpdateClassRoom title={`Cập nhật lớp học ${row.user_name}`} open={openModalUpdateClassRoom} handleClose={() => setopenModalUpdateClassRoom(false)} handleAlert={(e) => setOpenAlert(e)} dataClassRoom={formValues[index]} dataGroupClass={formValuesGroupClass} dataUser={formValuesUser} idClass={row.id}/>
                     </TableCell>
-                    <AlertItemDelete title={row.user_name} open={openModalDelete} handleAlert={(e) => setOpenAlert(e)} handleClose={() => setopenModalDelete(false)} id_user={row.id}/>
+                    <AlertItemDeleteClassRoom title={row.class_name} open={openModalDelete} handleAlert={(e) => setOpenAlert(e)} handleClose={() => setopenModalDelete(false)} id_class={row.id}/>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
         </TableContainer>
-        <ModalAddClassRoom title={'Thêm người dùng'} open={openModalAddClassRoom} handleClose={() => setopenModalAddClassRoom(false)} handleAlert={(e) => setOpenAlert(e)} dataRole={formValuesRole}/>
+        <ModalAddClassRoom title={'Thêm lớp học'} open={openModalAddClassRoom} handleClose={() => setopenModalAddClassRoom(false)} handleAlert={(e) => setOpenAlert(e)} dataGroupClass={formValuesGroupClass} dataUser={formValuesUser}/>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"

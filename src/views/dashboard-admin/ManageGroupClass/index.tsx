@@ -26,7 +26,7 @@ export default function ManageGroupClass() {
     return (
         <div>
             {
-                groupClass?.length !== 0 ? <StickyHeadTable projectItem={groupClass}/> : <CircularProgress />
+                groupClass?.length !== 0 ? <StickyHeadTable projectItem={dataGroupClass}/> : <CircularProgress />
             }
         </div>
     );

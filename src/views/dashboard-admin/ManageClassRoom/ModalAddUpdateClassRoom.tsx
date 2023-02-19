@@ -13,37 +13,37 @@ interface Props {
     handleClose: (status: boolean) => void;
     handleAlert: (status: boolean) => void;
     dataClassRoom: any;
-    id_user: any;
+    dataGroupClass: any;
+    dataUser: any;
+    idClass: any;
 }
 
 // ==============================|| KANBAN BOARD - ITEM DELETE ||============================== //
 
-export default function ModalAddUpdateClassRoom({ title, open, handleClose, handleAlert, dataClassRoom, id_user}: Props) {
+export default function ModalAddUpdateClassRoom({ title, open, handleClose, handleAlert, dataClassRoom, dataGroupClass, dataUser, idClass}: Props) {
 
+
+    const [clasSName, setClassName] = useState(dataGroupClass.class_name);
+    const [idGroup, setIdGroup] = useState(dataGroupClass.id_group);
+    const [idUser, setIdUser] = useState(dataGroupClass.id_user);
     console.log('dataClassRoom', dataClassRoom);
-
-    const { dataRole, loading } = GetRole()
-
-    const [username, setClassRoomname] = useState('');
-    const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
-    const [permission, setPermission] = useState('...');
-    const [user_account, setClassRoom_account] = useState('');
-
+    
     React.useEffect(() => {
-        setRole(dataClassRoom?.id_role);
-        setClassRoomname(dataClassRoom?.user_name);
-        setPassword(dataClassRoom?.user_password);
-        setPermission(dataClassRoom?.permission);
-        setClassRoom_account(dataClassRoom?.user_account);
-    }, [dataClassRoom]);
+        setClassName(dataClassRoom?.class_name);
+        setIdGroup(dataClassRoom?.id_group);
+        setIdUser(dataClassRoom?.id_user);
+    }, [dataClassRoom, dataGroupClass, dataUser]);
 
-    const handleChange = (event: SelectChangeEvent) => {
-        setRole(event.target.value);
+    const handleChangeGroup = (event: SelectChangeEvent) => {
+        setIdGroup(event.target.value);
+    };
+    const handleChangeUser = (event: SelectChangeEvent) => {
+        setIdUser(event.target.value);
     };
 
+
     const handleCreate = async () => {
-        const response = await axios.post(`${AUTH_API.CreateClassRoom}?user_name=${username}&id_role=${role}&permission=${permission}&user_password=${password}&user_account=${user_account}`);
+        const response = await axios.post(`${AUTH_API.UpdateClassRoom}?id_class=${idClass}&group_name=${clasSName}&id_group=${idGroup}&id_user=${idUser}`);
         if (response.data.status === true) {
           handleClose(true)
           handleAlert(true)
@@ -63,22 +63,33 @@ export default function ModalAddUpdateClassRoom({ title, open, handleClose, hand
         >
             {open && (
                 <>
-                    <DialogTitle align='center' id="item-delete-title">{title}</DialogTitle>
+                   <DialogTitle align='center' id="item-delete-title">{title}</DialogTitle>
                     <FormControl>
                         <Grid item sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', minWidth: '400px' }}>
-                            <TextField id="outlined-basic" value={username} label="Tài khoản" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setClassRoomname(e.target.value)} />
-                            <TextField id="outlined-basic" value={user_account} label="Tên người dùng" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setClassRoom_account(e.target.value)} />
-                            <TextField id="outlined-basic" value={password} label="Mật khẩu" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setPassword(e.target.value)} />
+                            <TextField value={clasSName} id="outlined-basic" label="Tên lớp" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setClassName(e.target.value)} />
                             <FormControl sx={{ width: '90%' }}>
-                                <InputLabel id="demo-simple-select-label">Chức vụ</InputLabel>
+                                <InputLabel id="demo-simple-select-label">Nhóm lớp</InputLabel>
                                 <Select
                                     id="select-basic"
-                                    value={role}
-                                    label="Chức vụ"
-                                    onChange={handleChange}
+                                    value={idGroup}
+                                    label="Nhóm lớp"
+                                    onChange={handleChangeGroup}
                                 >
-                                    {dataRole.map((items: any) => (
-                                        <MenuItem value={items.id} >{items.role_name}</MenuItem>
+                                    {dataGroupClass.map((items: any) => (
+                                        <MenuItem value={items.id} >{items.group_name}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl sx={{ width: '90%' }}>
+                                <InputLabel id="demo-simple-select-label">Người dùng</InputLabel>
+                                <Select
+                                    id="select-basic"
+                                    value={idUser}
+                                    label="Người dùng"
+                                    onChange={handleChangeUser}
+                                >
+                                    {dataUser.map((items: any) => (
+                                        <MenuItem value={items.id} >{items.user_name}</MenuItem>
                                     ))}
                                 </Select>
                             </FormControl>
@@ -87,7 +98,7 @@ export default function ModalAddUpdateClassRoom({ title, open, handleClose, hand
                             <Button onClick={() => handleClose(false)} color="error">
                                 Hủy bỏ
                             </Button>
-                            <Button disabled={username === '' || password === '' || role === ''} variant="contained" size="small" onClick={handleCreate} autoFocus>
+                            <Button disabled={clasSName === '' || idGroup === '' || idUser === ''} variant="contained" size="small" onClick={handleCreate} autoFocus>
                                 Thêm
                             </Button>
                         </DialogActions>
