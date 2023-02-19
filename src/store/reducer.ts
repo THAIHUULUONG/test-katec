@@ -37,8 +37,8 @@ const reducer = combineReducers({
     calendar: calendarReducer,
     mail: mailReducer,
     user: userReducer,
+    allUser: allUserReducer,
     menu: menuReducer,
     getlistprojectwaiting: getListWaitingReducer,
-    allUser: allUserReducer,
 });
 export default reducer;

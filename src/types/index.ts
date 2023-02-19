@@ -20,7 +20,7 @@ import { UserStateProps } from './user';
 
 import { SnackbarProps } from './snackbar';
 import { ProjectWaitingStateProps } from './projectwaiting';
-import { GetAllUserStateProps } from './allUser';
+import { AllUserStateProps } from './allUser';
 
 declare module '@mui/styles/defaultTheme' {
     // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -123,8 +123,10 @@ export interface DefaultRootStateProps {
     calendar: CalendarStateProps;
     mail: MailStateProps;
     user: UserStateProps;
-    allUser: GetAllUserStateProps;
     getlistprojectwaiting:ProjectWaitingStateProps;
+}
+export interface DefaultStateProps {
+    allUser: AllUserStateProps;
 }
 
 export interface ColorProps {

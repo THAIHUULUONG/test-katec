@@ -3,7 +3,7 @@ import { Alert, Button, Collapse, Dialog, DialogActions, DialogTitle, FormContro
 import { GridCloseIcon } from '@mui/x-data-grid';
 import { AUTH_API } from '_apis/api-endpoint';
 import { GetRole } from 'hooks/fetchDataAll';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'utils/axios';
 
 // types
@@ -12,20 +12,31 @@ interface Props {
     open: boolean;
     handleClose: (status: boolean) => void;
     handleAlert: (status: boolean) => void;
+    dataUser: any;
+    id_user: any;
 }
 
 // ==============================|| KANBAN BOARD - ITEM DELETE ||============================== //
 
-export default function ModalAddUpdateUser({ title, open, handleClose, handleAlert}: Props) {
+export default function ModalAddUpdateUser({ title, open, handleClose, handleAlert, dataUser, id_user}: Props) {
+
+    console.log('dataUser', dataUser);
 
     const { dataRole, loading } = GetRole()
-    console.log('dataRole', dataRole);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
     const [permission, setPermission] = useState('...');
     const [user_account, setUser_account] = useState('');
+
+    React.useEffect(() => {
+        setRole(dataUser.id_role);
+        setUsername(dataUser.user_name);
+        setPassword(dataUser.user_password);
+        setPermission(dataUser.permission);
+        setUser_account(dataUser.user_account);
+    }, [dataUser]);
 
     const handleChange = (event: SelectChangeEvent) => {
         setRole(event.target.value);
@@ -55,9 +66,9 @@ export default function ModalAddUpdateUser({ title, open, handleClose, handleAle
                     <DialogTitle align='center' id="item-delete-title">{title}</DialogTitle>
                     <FormControl>
                         <Grid item sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', minWidth: '400px' }}>
-                            <TextField id="outlined-basic" label="Tài khoản" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setUsername(e.target.value)} />
-                            <TextField id="outlined-basic" label="Tên người dùng" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setUser_account(e.target.value)} />
-                            <TextField id="outlined-basic" label="Mật khẩu" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setPassword(e.target.value)} />
+                            <TextField id="outlined-basic" value={username} label="Tài khoản" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setUsername(e.target.value)} />
+                            <TextField id="outlined-basic" value={user_account} label="Tên người dùng" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setUser_account(e.target.value)} />
+                            <TextField id="outlined-basic" value={password} label="Mật khẩu" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setPassword(e.target.value)} />
                             <FormControl sx={{ width: '90%' }}>
                                 <InputLabel id="demo-simple-select-label">Vai trò</InputLabel>
                                 <Select

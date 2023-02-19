@@ -4,7 +4,7 @@ import { GridCloseIcon } from '@mui/x-data-grid';
 import { AUTH_API } from '_apis/api-endpoint';
 import { GetRole } from 'hooks/fetchDataAll';
 import { useState } from 'react';
-import { useDispatch } from 'store';
+import { dispatch, useDispatch } from 'store';
 import { getUsersList } from 'store/slices/allUser';
 import axios from 'utils/axios';
 
@@ -14,14 +14,12 @@ interface Props {
     open: boolean;
     handleClose: (status: boolean) => void;
     handleAlert: (status: boolean) => void;
+    dataRole: any;
 }
 
 // ==============================|| KANBAN BOARD - ITEM DELETE ||============================== //
 
-export default function ModalAddUser({ title, open, handleClose, handleAlert}: Props) {
-
-    const { dataRole, loading } = GetRole()
-    console.log('dataRole', dataRole);
+export default function ModalAddUser({ title, open, handleClose, handleAlert, dataRole}: Props) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -38,7 +36,7 @@ export default function ModalAddUser({ title, open, handleClose, handleAlert}: P
         if (response.data.status === true) {
           handleClose(true)
           handleAlert(true)
-        //   useDispatch(getUsersList());
+          dispatch(getUsersList());
         } else {
         }
     };

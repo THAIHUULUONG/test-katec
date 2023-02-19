@@ -1,5 +1,9 @@
 // material-ui
 import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
+import { AUTH_API } from '_apis/api-endpoint';
+import { dispatch } from 'store';
+import { getUsersList } from 'store/slices/allUser';
+import axios from 'utils/axios';
 
 // types
 interface Props {
@@ -12,6 +16,16 @@ interface Props {
 // ==============================|| KANBAN BOARD - ITEM DELETE ||============================== //
 
 export default function AlertItemDelete({ title, open, handleClose, id_user }: Props) {
+
+    const handleDelete = async () => {
+        const response = await axios.post(`${AUTH_API.DeleteUser}?id_user=${id_user}`);
+        if (response.data.status === true) {
+          handleClose(true)
+          dispatch(getUsersList());
+        } else {
+        }
+    };
+
     return (
         <Dialog
             open={open}
@@ -28,7 +42,7 @@ export default function AlertItemDelete({ title, open, handleClose, id_user }: P
                         <Button onClick={() => handleClose(false)} color="error">
                             Cancel
                         </Button>
-                        <Button variant="contained" size="small" onClick={() => handleClose(true)} autoFocus>
+                        <Button variant="contained" size="small" onClick={handleDelete} autoFocus>
                             Delete
                         </Button>
                     </DialogActions>

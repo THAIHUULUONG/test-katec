@@ -6,13 +6,14 @@ import axios from 'utils/axios';
 import { dispatch } from '../index';
 
 // types
-import { DefaultRootStateProps } from 'types';
+import { DefaultStateProps } from 'types';
 
 // ----------------------------------------------------------------------
 
-const initialState: DefaultRootStateProps['allUser'] = {
+const initialState: DefaultStateProps['allUser'] = {
     error: null,
-    dataAllUser: [],
+    usersS1: [],
+    roleUser: [],
 };
 
 const slice = createSlice({
@@ -24,10 +25,15 @@ const slice = createSlice({
             state.error = action.payload;
         },
 
-        // GET ALL 
+        // GET USERS 
         getUsersListSuccess(state, action) {
-            state.dataAllUser = action.payload;
+            state.usersS1 = action.payload;
         },
+
+         // GET ROLE STYLE 1
+         getRoleListSuccess(state, action) {
+            state.roleUser = action.payload;
+        }
     }
 });
 
@@ -40,8 +46,18 @@ export function getUsersList() {
     return async () => {
         try {
             const response = await axios.get('/showAllUser');
-            console.log('response123', response);
             dispatch(slice.actions.getUsersListSuccess(response.data.data));
+        } catch (error) {
+            dispatch(slice.actions.hasError(error));
+        }
+    };
+}
+
+export function getRoleList() {
+    return async () => {
+        try {
+            const response = await axios.post('/viewRole');
+            dispatch(slice.actions.getRoleListSuccess(response.data.data));
         } catch (error) {
             dispatch(slice.actions.hasError(error));
         }

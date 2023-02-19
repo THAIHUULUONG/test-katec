@@ -2,32 +2,35 @@
 import { CircularProgress } from '@mui/material';
 import StickyHeadTable from './table';
 import { GetAllUser } from 'hooks/fetchDataAll';
-import { useDispatch, useSelector } from 'store';
+import { dispatch, useDispatch, useSelector } from 'store';
 import React from 'react';
-import { UserAllProfile } from 'types/allUser';
-import { getUsersList } from 'store/slices/allUser';
+import { AllUserProfile, RoleProfile } from 'types/all-user-type';
+import { getRoleList, getUsersList } from 'store/slices/allUser';
 
 //import components
 
 export default function ManageUser() {
     
-    const {dataUser, loading} = GetAllUser()
+    const [data, setData] = React.useState<AllUserProfile[]>([]);
+    const [role, setRole] = React.useState<RoleProfile[]>([]);
+    const { usersS1, roleUser } = useSelector((state) => state.allUser);
 
-    const [data, setData] = React.useState<UserAllProfile[]>([]);
-    const { dataAllUser } = useSelector((state) => state.allUser);
     React.useEffect(() => {
-        setData(dataAllUser);
-    }, [dataAllUser]);
+        setData(usersS1);
+        setRole(roleUser);
+    }, [usersS1, roleUser]);
 
-    // React.useEffect(() => {
-    //     useDispatch(getUsersList());
-    // }, []);
-    console.log('data123', dataAllUser);
+    React.useEffect(() => {
+        dispatch(getUsersList());
+        dispatch(getRoleList());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    
 
     return (
         <div>
             {
-                !loading ? <StickyHeadTable projectItem={dataUser}/> : <CircularProgress />
+                data?.length !== 0 ? <StickyHeadTable projectItem={data} roleItems={role}/> : <CircularProgress />
             }
         </div>
     );

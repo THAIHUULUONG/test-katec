@@ -1,12 +1,7 @@
-export type UserAllProfile = {
-    id?: any;
-    id_role?: any;
-    user_name?: any;
-    role_name?: any;
-};
+import { AllUserProfile, RoleProfile } from "./all-user-type";
 
-export interface GetAllUserStateProps {
-    dataAllUser: UserAllProfile[];
+export interface AllUserStateProps {
+    usersS1: AllUserProfile[];
+    roleUser: RoleProfile[];
     error: object | string | null;
 }
-

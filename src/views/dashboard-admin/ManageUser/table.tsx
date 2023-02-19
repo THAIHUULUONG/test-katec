@@ -33,9 +33,10 @@ let originalRows: any = [];
 export default function StickyHeadTable(props: {
   [x: string]: any;
   projectItem: any;
-
+  roleItems: any;
 }) {
   const [formValues, setFormValues] = useState([] as any);
+  const [formValuesRole, setFormValuesRole] = useState([] as any);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = useState<any[]>(originalRows);
@@ -43,6 +44,9 @@ export default function StickyHeadTable(props: {
   useEffect(() => {
     if (props && props.projectItem) {
       setFormValues([...props.projectItem]);
+    }
+    if (props && props.roleItems) {
+      setFormValuesRole([...props.roleItems]);
     }
   }, [props]);
 
@@ -161,14 +165,14 @@ export default function StickyHeadTable(props: {
                       <CsIconEdit onClick={() => setopenModalUpdateUser(true)}/>
                       <CsIconTrash onClick={() => setopenModalDelete(true)} />
                       <AlertItemDelete title={row.user_name} open={openModalDelete} handleClose={() => setopenModalDelete(false)} id_user={row.id}/>
+                      <ModalAddUpdateUser title={`Cập nhật người dùng ${row.user_name}`} open={openModalUpdateUser} handleClose={() => setopenModalUpdateUser(false)} handleAlert={(e) => setOpenAlert(e)} dataUser={formValues[index]} id_user={row.id}/>
                     </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
         </TableContainer>
-        <ModalAddUser title={'Thêm người dùng'} open={openModalAddUser} handleClose={() => setopenModalAddUser(false)} handleAlert={(e) => setOpenAlert(e)}/>
-        <ModalAddUpdateUser title={'Cập nhật người dùng'} open={openModalUpdateUser} handleClose={() => setopenModalUpdateUser(false)} handleAlert={(e) => setOpenAlert(e)}/>
+        <ModalAddUser title={'Thêm người dùng'} open={openModalAddUser} handleClose={() => setopenModalAddUser(false)} handleAlert={(e) => setOpenAlert(e)} dataRole={formValuesRole}/>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
