@@ -39,7 +39,7 @@ export default function AlertItemDelete({ title, open, handleClose, handleAlert,
         >
             {open && (
                 <>
-                    <DialogTitle id="item-delete-title">{title} - Bạn chắc chắn muốn xóa?</DialogTitle>
+                    <DialogTitle id="item-delete-title">{title} Bạn chắc chắn muốn xóa?</DialogTitle>
                     <DialogActions sx={{ mr: 2 }}>
                         <Button onClick={() => handleClose(false)} color="error">
                             Cancel

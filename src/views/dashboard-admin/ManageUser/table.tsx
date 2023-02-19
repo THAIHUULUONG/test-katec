@@ -97,6 +97,10 @@ export default function StickyHeadTable(props: {
   }, [formValues]);
 
   
+  const [idUser, setIdUser] = React.useState<number>(0);
+  const [nameUser, setNameUser] = React.useState<string>('');
+  console.log('idUser',idUser);
+  console.log('nameUser',nameUser);
 
   return (
     <>
@@ -162,11 +166,12 @@ export default function StickyHeadTable(props: {
                     <TableCell align="center">{row.user_name}</TableCell>
                     <TableCell align="center">{row.role_name}</TableCell>
                     <TableCell align="center">
-                      <CsIconEdit onClick={() => setopenModalUpdateUser(true)}/>
-                      <CsIconTrash onClick={() => setopenModalDelete(true)} />
-                      <ModalAddUpdateUser title={`Cập nhật người dùng ${row.user_name}`} open={openModalUpdateUser} handleClose={() => setopenModalUpdateUser(false)} handleAlert={(e) => setOpenAlert(e)} dataUser={formValues[index]} id_user={row.id}/>
+                      <CsIconEdit onClick={() => setIdUser(row.id)} onClickCapture={() => setopenModalUpdateUser(true)}/>
+                      {/* <CsIconTrash onClick={() => setopenModalDelete(true)} /> */}
+                      <CsIconTrash onClick={() => setIdUser(row.id)} onClickCapture={() => setopenModalDelete(true)}/>
+                      <ModalAddUpdateUser title={`Cập nhật người dùng ${row.user_name}`} open={openModalUpdateUser} handleClose={() => setopenModalUpdateUser(false)} handleAlert={(e) => setOpenAlert(e)} dataUser={row} id_user={idUser}/>
                     </TableCell>
-                    <AlertItemDelete title={row.user_name} open={openModalDelete} handleAlert={(e) => setOpenAlert(e)} handleClose={() => setopenModalDelete(false)} id_user={row.id}/>
+                    <AlertItemDelete title={''} open={openModalDelete} handleAlert={(e) => setOpenAlert(e)} handleClose={() => setopenModalDelete(false)} id_user={idUser}/>
                   </TableRow>
                 ))}
             </TableBody>
