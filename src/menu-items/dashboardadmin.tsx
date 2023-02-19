@@ -2,17 +2,18 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { IconDashboard, IconDeviceAnalytics, IconBasket, IconLayoutKanban, IconNfc, IconUsers } from '@tabler/icons';
+import { IconDashboard, IconClipboard, IconClipboardList, IconSchool, IconNfc, IconUsers, IconMilitaryRank } from '@tabler/icons';
 import { OverrideIcon } from 'types';
 
 // constant
 const icons = {
     IconDashboard,
-    IconDeviceAnalytics,
-    IconBasket,
-    IconLayoutKanban,
+    IconClipboard,
+    IconClipboardList,
+    IconSchool,
     IconNfc,
-    IconUsers
+    IconUsers,
+    IconMilitaryRank
 };
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
@@ -42,6 +43,38 @@ const dashboardAdmin: DashboardMenuProps = {
             type: 'item',
             url: '/manage-user',
             icon: icons.IconUsers,
+            breadcrumbs: false
+        },
+        {
+            id: 'role-user',
+            title: <FormattedMessage id="Quản lý chức vụ" />,
+            type: 'item',
+            url: '/role-user',
+            icon: icons.IconMilitaryRank,
+            breadcrumbs: false
+        },
+        {
+            id: 'group-class',
+            title: <FormattedMessage id="Quản lý nhóm lớp học" />,
+            type: 'item',
+            url: '/group-class',
+            icon: icons.IconClipboardList,
+            breadcrumbs: false
+        },
+        {
+            id: 'class-room',
+            title: <FormattedMessage id="Quản lý lớp học" />,
+            type: 'item',
+            url: '/class-room',
+            icon: icons.IconClipboard,
+            breadcrumbs: false
+        },
+        {
+            id: 'manage-student',
+            title: <FormattedMessage id="Quản lý học sinh" />,
+            type: 'item',
+            url: '/manage-student',
+            icon: icons.IconSchool,
             breadcrumbs: false
         },
     ]

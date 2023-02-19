@@ -20,6 +20,22 @@ const MainRoutes = {
       path: "/manage-user",
       element: <ManageUser />,
     },
+    {
+      path: "/role-user",
+      element: <ManageUser />,
+    },
+    {
+      path: "/group-class",
+      element: <ManageUser />,
+    },
+    {
+      path: "/class-room",
+      element: <ManageUser />,
+    },
+    {
+      path: "/manage-student",
+      element: <ManageUser />,
+    },
   ],
 };
 
