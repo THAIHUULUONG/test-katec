@@ -4,6 +4,8 @@ import { GridCloseIcon } from '@mui/x-data-grid';
 import { AUTH_API } from '_apis/api-endpoint';
 import { GetRole } from 'hooks/fetchDataAll';
 import React, { useState } from 'react';
+import { dispatch } from 'store';
+import { getRoleList } from 'store/slices/allUser';
 import axios from 'utils/axios';
 
 // types
@@ -12,42 +14,27 @@ interface Props {
     open: boolean;
     handleClose: (status: boolean) => void;
     handleAlert: (status: boolean) => void;
-    dataUser: any;
-    id_user: any;
+    id_role: any;
+    role_name: any;
 }
 
 // ==============================|| KANBAN BOARD - ITEM DELETE ||============================== //
 
-export default function ModalAddUpdateRole({ title, open, handleClose, handleAlert, dataUser, id_user}: Props) {
+export default function ModalAddUpdateRole({ title, open, handleClose, handleAlert, id_role, role_name}: Props) {
 
-    console.log('dataUser', dataUser);
-
-    const { dataRole, loading } = GetRole()
-
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
-    const [permission, setPermission] = useState('...');
-    const [user_account, setUser_account] = useState('');
-
     React.useEffect(() => {
-        setRole(dataUser?.id_role);
-        setUsername(dataUser?.user_name);
-        setPassword(dataUser?.user_password);
-        setPermission(dataUser?.permission);
-        setUser_account(dataUser?.user_account);
-    }, [dataUser]);
+        setRole(role_name)
+    }, [role_name]);
 
-    const handleChange = (event: SelectChangeEvent) => {
-        setRole(event.target.value);
-    };
+    
 
     const handleCreate = async () => {
-        const response = await axios.post(`${AUTH_API.CreateUser}?user_name=${username}&id_role=${role}&permission=${permission}&user_password=${password}&user_account=${user_account}`);
+        const response = await axios.post(`${AUTH_API.UpdateRole}?id_role=${id_role}&role_name=${role}`);
         if (response.data.status === true) {
           handleClose(true)
           handleAlert(true)
-          localStorage.setItem('status', 'Thành công');
+          dispatch(getRoleList());
         } else {
         }
     };
@@ -66,28 +53,13 @@ export default function ModalAddUpdateRole({ title, open, handleClose, handleAle
                     <DialogTitle align='center' id="item-delete-title">{title}</DialogTitle>
                     <FormControl>
                         <Grid item sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', minWidth: '400px' }}>
-                            <TextField id="outlined-basic" value={username} label="Tài khoản" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setUsername(e.target.value)} />
-                            <TextField id="outlined-basic" value={user_account} label="Tên người dùng" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setUser_account(e.target.value)} />
-                            <TextField id="outlined-basic" value={password} label="Mật khẩu" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setPassword(e.target.value)} />
-                            <FormControl sx={{ width: '90%' }}>
-                                <InputLabel id="demo-simple-select-label">Chức vụ</InputLabel>
-                                <Select
-                                    id="select-basic"
-                                    value={role}
-                                    label="Chức vụ"
-                                    onChange={handleChange}
-                                >
-                                    {dataRole.map((items: any) => (
-                                        <MenuItem value={items.id} >{items.role_name}</MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
+                            <TextField id="outlined-basic" value={role} label="Tên chức vụ" variant="outlined" sx={{ width: '90%' }} onChange={(e) => setRole(e.target.value)} />
                         </Grid>
                         <DialogActions sx={{ mr: 2 }}>
                             <Button onClick={() => handleClose(false)} color="error">
                                 Hủy bỏ
                             </Button>
-                            <Button disabled={username === '' || password === '' || role === ''} variant="contained" size="small" onClick={handleCreate} autoFocus>
+                            <Button disabled={role === '' || role === role_name} variant="contained" size="small" onClick={handleCreate} autoFocus>
                                 Thêm
                             </Button>
                         </DialogActions>

@@ -159,7 +159,7 @@ export default function StickyHeadTable(props: {
                     <TableCell align="center">
                       <CsIconEdit onClick={() => setopenModalUpdateGroupClass(true)}/>
                       <CsIconTrash onClick={() => setopenModalDelete(true)} />
-                      <ModalAddUpdateGroupClass title={`Cập nhật nhóm lớp ${row.group_name}`} open={openModalUpdateGroupClass} handleClose={() => setopenModalUpdateGroupClass(false)} handleAlert={(e) => setOpenAlert(e)} dataGroupClass={formValues[index]} id_group={row.id}/>
+                      <ModalAddUpdateGroupClass title={`Cập nhật nhóm lớp ${row.group_name}`} open={openModalUpdateGroupClass} handleClose={() => setopenModalUpdateGroupClass(false)} handleAlert={(e) => setOpenAlert(e)} group_name={row.group_name} id_group={row.id}/>
                     </TableCell>
                     <AlertItemDeleteGroupClass title={row.group_name} open={openModalDelete} handleAlert={(e) => setOpenAlert(e)} handleClose={() => setopenModalDelete(false)} id_group_class={row.id}/>
                   </TableRow>

@@ -39,7 +39,7 @@ export default function AlertItemDeleteGroupClass({ title, open, handleClose, ha
         >
             {open && (
                 <>
-                    <DialogTitle id="item-delete-title">{title} - Are you sure you want to delete this item?</DialogTitle>
+                    <DialogTitle id="item-delete-title">{title} - Bạn chắc chắn muốn xóa?</DialogTitle>
                     <DialogActions sx={{ mr: 2 }}>
                         <Button onClick={() => handleClose(false)} color="error">
                             Cancel

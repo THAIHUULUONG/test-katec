@@ -19,7 +19,7 @@ interface Props {
 export default function AlertItemDeleteRole({ title, open, handleClose, handleAlert, id_role }: Props) {
 
     const handleDelete = async () => {
-        const response = await axios.post(`${AUTH_API.DeleteUser}?id_role=${id_role}`);
+        const response = await axios.post(`${AUTH_API.DeleteRole}?id_role=${id_role}`);
         if (response.data.status === true) {
           handleClose(true)
           handleAlert(true)
@@ -39,7 +39,7 @@ export default function AlertItemDeleteRole({ title, open, handleClose, handleAl
         >
             {open && (
                 <>
-                    <DialogTitle id="item-delete-title">{title} - Are you sure you want to delete this item?</DialogTitle>
+                    <DialogTitle id="item-delete-title">{title} - Bạn chắc chắn muốn xóa?</DialogTitle>
                     <DialogActions sx={{ mr: 2 }}>
                         <Button onClick={() => handleClose(false)} color="error">
                             Cancel

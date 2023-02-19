@@ -163,7 +163,7 @@ export default function StickyHeadTable(props: {
                     <TableCell align="center">
                       <CsIconEdit onClick={() => setopenModalUpdateUser(true)}/>
                       <CsIconTrash onClick={() => setopenModalDelete(true)} />
-                      <ModalAddUpdateRole title={`Cập nhật chức vụ ${row.role_name}`} open={openModalUpdateUser} handleClose={() => setopenModalUpdateUser(false)} handleAlert={(e) => setOpenAlert(e)} dataUser={formValues[index]} id_user={row.id}/>
+                      <ModalAddUpdateRole title={`Cập nhật chức vụ ${row.role_name}`} open={openModalUpdateUser} handleClose={() => setopenModalUpdateUser(false)} handleAlert={(e) => setOpenAlert(e)} role_name={row.role_name} id_role={row.id}/>
                     </TableCell>
                     <AlertItemDeleteRole title={row.role_name} open={openModalDelete} handleAlert={(e) => setOpenAlert(e)} handleClose={() => setopenModalDelete(false)} id_role={row.id}/>
                   </TableRow>

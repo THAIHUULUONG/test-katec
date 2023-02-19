@@ -10,6 +10,12 @@ export const AUTH_API = {
     DeleteClassRoom: 'deleteClassRoom',
     CreateStudent: 'createStudent',
     DeleteStudent: 'deleteStudent',
+
+    UpdateUser: 'updateUser',
+    UpdateRole: 'updateRole',
+    UpdateClassGroup: 'updateClassGroup',
+    UpdateClassRoom: 'updateClassRoom',
+    UpdateStudent: 'updateStudent',
     
 };
 
